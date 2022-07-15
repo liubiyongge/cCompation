@@ -1,3 +1,6 @@
 [submodule "rocksdb"]
 	path = rocksdb
 	url = git@github.com:liubiyongge/rocksdb.git
+[submodule "spdlog"]
+	path = spdlog
+	url = https://github.com/gabime/spdlog
