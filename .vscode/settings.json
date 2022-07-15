@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "spdlog.h": "c",
+        "unordered_map": "c",
+        "unordered_set": "c",
+        "cstdlib": "c"
+    }
+}

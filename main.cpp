@@ -1,10 +1,22 @@
 #include <iostream>
 #include <assert.h>
 #include "rocksdb/db.h"
-
+#include "spdlog/spdlog.h"
+#include "spdlog/async.h"
+#include "spdlog/sinks/basic_file_sink.h"
 using namespace std;
 
 int main() {
+    //open a log
+    auto logfile = spdlog::basic_logger_mt<spdlog::async_factory>("async_file_logger", "logs/log.txt");
+    logfile->set_pattern("[%H:%M:%S %z] [thread %t] [%s %#] [%l] %v");
+#if defined(PRODUCTION)
+    logfile->set_level(spdlog::level::off);
+#else
+    logfile->set_level(spdlog::level::trace);
+#endif
+    spdlog::set_default_logger(logfile);
+
     rocksdb::DB* db;
     rocksdb::Options options;
     options.create_if_missing = true;
@@ -28,7 +40,7 @@ int main() {
     assert(status.ok());
     status = db->Get(rocksdb::ReadOptions(), key, &value2);
     assert(status.IsNotFound());
-    cout << value2 << endl;
+    SPDLOG_INFO("value is {}.\n", value2);
     // close the database
     delete db;
     
