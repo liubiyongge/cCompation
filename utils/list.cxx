@@ -1,17 +1,3 @@
-// Copyright [2020] [FORTH-ICS]
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
@@ -46,7 +32,7 @@ void klist_add_first(struct klist *list, void *data, const char *data_key, destr
 	}
 	node->data = data;
 	if (data_key) {
-		node->key = calloc(1, strlen(data_key) + 1);
+		node->key = (char *)calloc(1, strlen(data_key) + 1);
 		if (!node->key) {
 			SPDLOG_ERROR("Calloc failed out of memory");
 			exit(EXIT_FAILURE);
@@ -70,14 +56,14 @@ void klist_add_first(struct klist *list, void *data, const char *data_key, destr
 
 void klist_add_last(struct klist *list, void *data, const char *data_key, destroy_node_data destroy_data)
 {
-	struct klist_node *node = calloc(1, sizeof(struct klist_node));
+	struct klist_node *node = (struct klist_node *)calloc(1, sizeof(struct klist_node));
 	if (!node) {
 		SPDLOG_ERROR("Calloc failed");
 		exit(EXIT_FAILURE);
 	}
 	node->data = data;
 	if (data_key != NULL) {
-		node->key = calloc(1, strlen(data_key) + 1);
+		node->key = (char *)calloc(1, strlen(data_key) + 1);
 		if (!node->key) {
 			SPDLOG_ERROR("calloc failed");
 			exit(EXIT_FAILURE);
